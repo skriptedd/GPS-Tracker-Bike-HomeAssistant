@@ -1,0 +1,144 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bike Tracker",
+        "description": "Pick the device tracker that reports your phone's position. Enable 'high accuracy mode' in the companion app for clean tracks.",
+        "data": {
+          "source_entity": "Location source"
+        }
+      }
+    },
+    "error": {
+      "entity_not_found": "That entity does not exist.",
+      "no_gps": "That entity has no latitude/longitude attributes."
+    },
+    "abort": {
+      "already_configured": "This location source is already tracked."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Detection settings",
+        "description": "Defaults are tuned for the companion app in high accuracy mode.",
+        "data": {
+          "start_speed_kmh": "Start speed",
+          "start_duration_s": "Time above start speed",
+          "stop_speed_kmh": "Stop speed",
+          "stop_duration_s": "Time below stop speed",
+          "stale_timeout_s": "No-signal timeout",
+          "max_accuracy_m": "Discard fixes worse than",
+          "min_trip_distance_m": "Minimum trip distance",
+          "min_trip_duration_s": "Minimum trip duration",
+          "elevation_source": "Elevation source",
+          "elevation_url": "Elevation service URL (only used with the map data source)",
+          "elevation_threshold_m": "Elevation noise threshold",
+          "track_all_activities": "Also store walks and car trips",
+          "require_confirmation": "Mark new trips as unconfirmed",
+          "retention_days": "Delete trips older than (0 = keep forever)",
+          "routing_url": "Routing backend URL"
+        }
+      }
+    }
+  },
+  "selector": {
+    "elevation_source": {
+      "options": {
+        "gps": "GPS altitude (smoothed)",
+        "dem": "Map data (elevation model)",
+        "none": "Do not track elevation"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_speed": {
+        "name": "Current speed"
+      },
+      "current_trip_distance": {
+        "name": "Current trip distance"
+      },
+      "current_trip_duration": {
+        "name": "Current trip duration"
+      },
+      "last_trip_distance": {
+        "name": "Last trip distance"
+      },
+      "last_trip_duration": {
+        "name": "Last trip duration"
+      },
+      "last_trip_avg_speed": {
+        "name": "Last trip average speed"
+      },
+      "last_trip_elevation_gain": {
+        "name": "Last trip elevation gain"
+      },
+      "distance_today": {
+        "name": "Distance today"
+      },
+      "duration_today": {
+        "name": "Ride time today"
+      },
+      "trips_today": {
+        "name": "Trips today"
+      },
+      "elevation_today": {
+        "name": "Elevation gain today"
+      },
+      "distance_week": {
+        "name": "Distance this week"
+      },
+      "duration_week": {
+        "name": "Ride time this week"
+      },
+      "trips_week": {
+        "name": "Trips this week"
+      },
+      "elevation_week": {
+        "name": "Elevation gain this week"
+      },
+      "distance_month": {
+        "name": "Distance this month"
+      },
+      "duration_month": {
+        "name": "Ride time this month"
+      },
+      "trips_month": {
+        "name": "Trips this month"
+      },
+      "elevation_month": {
+        "name": "Elevation gain this month"
+      },
+      "distance_year": {
+        "name": "Distance this year"
+      },
+      "duration_year": {
+        "name": "Ride time this year"
+      },
+      "trips_year": {
+        "name": "Trips this year"
+      },
+      "elevation_year": {
+        "name": "Elevation gain this year"
+      },
+      "distance_total": {
+        "name": "Distance total"
+      },
+      "duration_total": {
+        "name": "Ride time total"
+      },
+      "trips_total": {
+        "name": "Trips total"
+      },
+      "elevation_total": {
+        "name": "Elevation gain total"
+      }
+    },
+    "binary_sensor": {
+      "recording": {
+        "name": "Recording"
+      }
+    }
+  }
+}

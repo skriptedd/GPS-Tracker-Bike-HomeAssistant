@@ -1,0 +1,18 @@
+stages: [lint, test]
+
+default:
+  image: python:3.12-slim
+  before_script:
+    - pip install --quiet --upgrade pip
+    - pip install --quiet -r requirements-dev.txt
+
+lint:
+  stage: lint
+  script:
+    - ruff check custom_components tests
+    - python -m compileall -q custom_components
+
+test:
+  stage: test
+  script:
+    - pytest -q tests

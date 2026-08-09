@@ -1,0 +1,250 @@
+start_trip:
+  name: Start trip
+  description: >-
+    Manually start recording a trip, bypassing automatic detection. Useful for
+    short rides that would otherwise fall below the minimum distance.
+
+stop_trip:
+  name: Stop trip
+  description: Stop and save the trip that is currently being recorded.
+
+discard_trip:
+  name: Discard trip
+  description: Throw away the trip currently being recorded without saving it.
+
+set_activity:
+  name: Set activity
+  description: >-
+    Correct the automatically detected activity of a recorded trip. Confirms
+    the trip and sets its confidence to 100%.
+  fields:
+    trip_id:
+      name: Trip ID
+      description: Numeric ID of the trip.
+      required: true
+      example: 42
+      selector:
+        number:
+          min: 1
+          mode: box
+    activity:
+      name: Activity
+      description: The correct activity.
+      required: true
+      selector:
+        select:
+          options:
+            - walk
+            - bike
+            - car
+            - unknown
+
+delete_trip:
+  name: Delete trip
+  description: Permanently delete a trip and its track points.
+  fields:
+    trip_id:
+      name: Trip ID
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+
+export_gpx:
+  name: Export GPX
+  description: Write a trip to a .gpx file.
+  fields:
+    trip_id:
+      name: Trip ID
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+    path:
+      name: Target path
+      description: >-
+        Absolute path of the file to write. Defaults to
+        /config/www/bike_tracker/trip_<id>.gpx, which is reachable at
+        /local/bike_tracker/trip_<id>.gpx.
+      selector:
+        text:
+
+import_gpx:
+  name: Import GPX
+  description: >-
+    Import recorded .gpx files as trips. Point it at a single file or at a
+    directory - every .gpx inside is read. Files without timestamps (planned
+    routes from Komoot or BRouter) are skipped, and rides that overlap an
+    existing trip are not imported twice.
+  fields:
+    path:
+      name: File or directory
+      description: >-
+        Must be inside the config directory or an allowlist_external_dirs entry.
+      required: true
+      example: /config/gpx-import
+      selector:
+        text:
+    activity:
+      name: Activity
+      description: >-
+        Force the activity instead of detecting it from the speed profile.
+      selector:
+        select:
+          options:
+            - walk
+            - bike
+            - car
+            - unknown
+
+refresh_elevation:
+  name: Refresh elevation
+  description: >-
+    Recompute the elevation of stored trips from the digital elevation model.
+    Requires the elevation source to be set to "dem" in the integration options.
+    Without arguments it processes every trip - mind the rate limit of the
+    public backend.
+  fields:
+    trip_id:
+      name: Trip ID
+      description: Leave empty to process several trips at once.
+      selector:
+        number:
+          min: 1
+          mode: box
+    days:
+      name: Days
+      description: Only trips from the last N days. 0 means all of them.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
+
+create_segment:
+  name: Create segment
+  description: >-
+    Define a segment from a stretch of an existing trip, then compare every
+    other ride against it. All stored trips are rescanned right away.
+  fields:
+    name:
+      name: Name
+      required: true
+      example: Hausberg-Anstieg
+      selector:
+        text:
+    trip_id:
+      name: Trip ID
+      description: The trip the segment is cut out of.
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+    start_index:
+      name: Start point
+      description: Index of the first track point. 0 is the start of the trip.
+      default: 0
+      selector:
+        number:
+          min: 0
+          mode: box
+    end_index:
+      name: End point
+      description: Index of the last track point. Empty means the end of the trip.
+      selector:
+        number:
+          min: 1
+          mode: box
+    radius_m:
+      name: Match radius
+      description: >-
+        How close a ride has to come to the start and end point to count.
+      default: 35
+      selector:
+        number:
+          min: 5
+          max: 250
+          step: 5
+          unit_of_measurement: m
+          mode: box
+
+delete_segment:
+  name: Delete segment
+  description: Delete a segment and all its recorded efforts.
+  fields:
+    segment_id:
+      name: Segment ID
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+
+rescan_segments:
+  name: Rescan segments
+  description: >-
+    Check stored trips against all segments again - after importing GPX files,
+    for example.
+  fields:
+    days:
+      name: Days
+      description: Only trips from the last N days. 0 means all of them.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
+
+plan_route:
+  name: Plan route
+  description: >-
+    Plan a bicycle route and optionally push it to the companion app.
+  fields:
+    start:
+      name: Start
+      description: 'Coordinates as lat,lon - or the name of a zone.'
+      required: true
+      example: "52.5163,13.3777"
+      selector:
+        text:
+    destination:
+      name: Destination
+      description: 'Coordinates as lat,lon - or the name of a zone.'
+      required: true
+      example: "home"
+      selector:
+        text:
+    profile:
+      name: Profile
+      default: bike
+      selector:
+        select:
+          options:
+            - bike
+            - fast
+            - safe
+            - mtb
+    notify_device:
+      name: Notify service
+      description: e.g. notify.mobile_app_pixel_8
+      selector:
+        text:
+
+purge:
+  name: Purge old trips
+  description: Delete trips older than the given number of days.
+  fields:
+    days:
+      name: Days
+      description: 0 deletes nothing.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3650
+          mode: box
