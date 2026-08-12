@@ -1,0 +1,144 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bike Tracker",
+        "description": "Wähle den Device Tracker, der die Position deines Handys meldet. Für saubere Tracks in der Companion App den 'High Accuracy Mode' aktivieren.",
+        "data": {
+          "source_entity": "Standortquelle"
+        }
+      }
+    },
+    "error": {
+      "entity_not_found": "Diese Entität existiert nicht.",
+      "no_gps": "Diese Entität hat keine Attribute latitude/longitude."
+    },
+    "abort": {
+      "already_configured": "Diese Standortquelle wird bereits getrackt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Erkennungseinstellungen",
+        "description": "Die Standardwerte sind auf die Companion App im High Accuracy Mode abgestimmt.",
+        "data": {
+          "start_speed_kmh": "Startgeschwindigkeit",
+          "start_duration_s": "Dauer über Startgeschwindigkeit",
+          "stop_speed_kmh": "Stoppgeschwindigkeit",
+          "stop_duration_s": "Dauer unter Stoppgeschwindigkeit",
+          "stale_timeout_s": "Timeout ohne GPS-Signal",
+          "max_accuracy_m": "Fixes verwerfen ab Ungenauigkeit",
+          "min_trip_distance_m": "Mindestdistanz einer Fahrt",
+          "min_trip_duration_s": "Mindestdauer einer Fahrt",
+          "elevation_source": "Höhenquelle",
+          "elevation_url": "URL des Höhendienstes (nur bei Höhenquelle „Kartendaten“)",
+          "elevation_threshold_m": "Rausch-Schwelle Höhenmeter",
+          "track_all_activities": "Auch Fußwege und Autofahrten speichern",
+          "require_confirmation": "Neue Fahrten als unbestätigt markieren",
+          "retention_days": "Fahrten löschen älter als (0 = nie)",
+          "routing_url": "URL des Routing-Backends"
+        }
+      }
+    }
+  },
+  "selector": {
+    "elevation_source": {
+      "options": {
+        "gps": "GPS-Höhe (geglättet)",
+        "dem": "Kartendaten (Höhenmodell)",
+        "none": "Keine Höhenmeter"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_speed": {
+        "name": "Aktuelle Geschwindigkeit"
+      },
+      "current_trip_distance": {
+        "name": "Distanz aktuelle Fahrt"
+      },
+      "current_trip_duration": {
+        "name": "Dauer aktuelle Fahrt"
+      },
+      "last_trip_distance": {
+        "name": "Distanz letzte Fahrt"
+      },
+      "last_trip_duration": {
+        "name": "Dauer letzte Fahrt"
+      },
+      "last_trip_avg_speed": {
+        "name": "Schnitt letzte Fahrt"
+      },
+      "last_trip_elevation_gain": {
+        "name": "Höhenmeter letzte Fahrt"
+      },
+      "distance_today": {
+        "name": "Distanz heute"
+      },
+      "duration_today": {
+        "name": "Fahrzeit heute"
+      },
+      "trips_today": {
+        "name": "Fahrten heute"
+      },
+      "elevation_today": {
+        "name": "Höhenmeter heute"
+      },
+      "distance_week": {
+        "name": "Distanz diese Woche"
+      },
+      "duration_week": {
+        "name": "Fahrzeit diese Woche"
+      },
+      "trips_week": {
+        "name": "Fahrten diese Woche"
+      },
+      "elevation_week": {
+        "name": "Höhenmeter diese Woche"
+      },
+      "distance_month": {
+        "name": "Distanz diesen Monat"
+      },
+      "duration_month": {
+        "name": "Fahrzeit diesen Monat"
+      },
+      "trips_month": {
+        "name": "Fahrten diesen Monat"
+      },
+      "elevation_month": {
+        "name": "Höhenmeter diesen Monat"
+      },
+      "distance_year": {
+        "name": "Distanz dieses Jahr"
+      },
+      "duration_year": {
+        "name": "Fahrzeit dieses Jahr"
+      },
+      "trips_year": {
+        "name": "Fahrten dieses Jahr"
+      },
+      "elevation_year": {
+        "name": "Höhenmeter dieses Jahr"
+      },
+      "distance_total": {
+        "name": "Distanz gesamt"
+      },
+      "duration_total": {
+        "name": "Fahrzeit gesamt"
+      },
+      "trips_total": {
+        "name": "Fahrten gesamt"
+      },
+      "elevation_total": {
+        "name": "Höhenmeter gesamt"
+      }
+    },
+    "binary_sensor": {
+      "recording": {
+        "name": "Zeichnet auf"
+      }
+    }
+  }
+}

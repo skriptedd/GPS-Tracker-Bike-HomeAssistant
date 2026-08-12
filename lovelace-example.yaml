@@ -1,0 +1,85 @@
+# Beispiel-Dashboard für den Bike Tracker.
+# Vorher /config/www/bike-tracker-card.js als JavaScript-Modul-Ressource eintragen.
+
+views:
+  - title: Fahrrad
+    path: bike
+    icon: mdi:bike
+    cards:
+      - type: custom:bike-tracker-card
+        title: Fahrradstatistik
+        activity: bike
+        limit: 25
+        days: 30
+        default_period: week
+        show_route: true
+        show_segments: true
+        # Nötig, damit im Routen-Panel "ans Handy" funktioniert:
+        # notify_service: notify.mobile_app_pixel_9
+
+      - type: entities
+        title: Aktuell
+        entities:
+          - entity: binary_sensor.bike_tracker_zeichnet_auf
+          - entity: sensor.bike_tracker_aktuelle_geschwindigkeit
+          - entity: sensor.bike_tracker_distanz_aktuelle_fahrt
+          - entity: sensor.bike_tracker_dauer_aktuelle_fahrt
+
+      - type: glance
+        title: Diese Woche
+        entities:
+          - entity: sensor.bike_tracker_distanz_diese_woche
+            name: Distanz
+          - entity: sensor.bike_tracker_fahrzeit_diese_woche
+            name: Zeit
+          - entity: sensor.bike_tracker_fahrten_diese_woche
+            name: Fahrten
+          - entity: sensor.bike_tracker_hoehenmeter_diese_woche
+            name: Höhe
+
+      - type: statistics-graph
+        title: Kilometer pro Woche
+        chart_type: bar
+        period: week
+        stat_types:
+          - state
+        entities:
+          - sensor.bike_tracker_distanz_gesamt
+
+      - type: entities
+        title: Steuerung
+        entities:
+          - type: call-service
+            name: Aufzeichnung starten
+            icon: mdi:record-circle
+            service: bike_tracker.start_trip
+          - type: call-service
+            name: Aufzeichnung beenden
+            icon: mdi:stop-circle
+            service: bike_tracker.stop_trip
+          - type: call-service
+            name: Aufzeichnung verwerfen
+            icon: mdi:delete-circle
+            service: bike_tracker.discard_trip
+          - type: call-service
+            name: Segmente neu prüfen
+            icon: mdi:map-marker-path
+            service: bike_tracker.rescan_segments
+            service_data:
+              days: 0
+
+# Neue Bestzeit aufs Handy schicken:
+#
+# automation:
+#   - alias: Segment-Bestzeit
+#     trigger:
+#       - platform: event
+#         event_type: bike_tracker_segment_record
+#     action:
+#       - service: notify.mobile_app_pixel_9
+#         data:
+#           title: "Neue Bestzeit 🏆"
+#           message: >-
+#             {{ trigger.event.data.segment }}:
+#             {{ (trigger.event.data.duration_s / 60) | round(1) }} min
+#             ({{ trigger.event.data.avg_speed_kmh }} km/h)
